@@ -1,0 +1,39 @@
+.footer {
+    background: var(--dark-gray);
+    color: var(--white);
+    padding: 3rem 0 1rem;
+  
+    .footer-logo {
+      font-family: "Poppins", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-orange);
+      margin-bottom: 1rem;
+    }
+  
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+  
+      .social-link {
+        width: 40px;
+        height: 40px;
+        background: var(--primary-orange);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        text-decoration: none;
+        transition: all 0.3s ease;
+  
+        &:hover {
+          background-color: #d84a1f;
+          transform: translateY(-2px);
+          color: var(--white);
+        }
+      }
+    }
+  }
+  
