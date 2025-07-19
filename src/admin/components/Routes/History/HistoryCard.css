@@ -1,0 +1,108 @@
+.history-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  overflow: hidden; /* Ensures image overlay stays within bounds */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative; /* For image overlay positioning */
+  min-height: 180px; /* Ensure cards are short */
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+
+    .card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(50%) blur(0.5px);
+    }
+  }
+
+  &:hover .card-image-wrapper {
+    opacity: 0.6;
+  }
+
+  .card-content {
+    position: relative;
+    z-index: 1;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+  }
+
+  .card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #000000; /* Changed to pure black for maximum contrast */
+    margin-bottom: 0.25rem;
+  }
+
+  .card-date {
+    font-size: 0.875rem;
+    color: #333333; /* Changed to a very dark gray for strong contrast */
+    margin-bottom: 1rem;
+  }
+
+  .card-edit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #ecfdf5;
+    color: #059669;
+    border: 1px solid #a7f3d0;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    align-self: flex-start;
+
+    &:hover {
+      background-color: #d1fae5;
+      border-color: #10b981;
+      box-shadow: 0 2px 6px rgba(16, 185, 129, 0.1);
+    }
+  }
+
+  /* Responsive adjustments for cards */
+  @media (max-width: 768px) {
+    min-height: 160px;
+
+    .card-content {
+      padding: 0.875rem 1rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+    }
+
+    .card-date {
+      font-size: 0.8125rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-edit-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8125rem;
+    }
+  }
+}

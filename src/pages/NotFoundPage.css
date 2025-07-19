@@ -1,0 +1,171 @@
+:root {
+  --animated-text-color: #10b981; /* CSS variable for the animated text color */
+}
+
+.not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f8fafc; /* Light background */
+  font-family: "Inter", sans-serif;
+  text-align: center;
+  padding: 1.5rem;
+  overflow: hidden; /* Hide overflow from animations */
+
+  .not-found-content {
+    max-width: 600px;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 3rem 2rem;
+    animation: fadeIn 1s ease-out forwards;
+    position: relative;
+    z-index: 1;
+  }
+
+  .not-found-code {
+    font-size: clamp(4rem, 15vw, 8rem); /* Responsive font size */
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+    overflow: hidden; /* For number animation */
+
+    &::before {
+      content: "404";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: #e5e7eb; /* Lighter background color for numbers */
+      z-index: -1;
+      font-size: clamp(4rem, 15vw, 8rem);
+      line-height: 1;
+      animation: slideIn 1.5s ease-out forwards;
+    }
+  }
+
+  .not-found-message {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1rem;
+  }
+
+  .animated-text {
+    color: var(--animated-text-color); /* Using the CSS variable */
+    display: inline-block;
+    animation: pulseText 2s infinite ease-in-out;
+  }
+
+  .not-found-description {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .go-home-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #10b981; /* Green accent color */
+    border: 1px solid #059669;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+
+    &:hover {
+      background-color: #059669;
+      border-color: #047857;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
+    }
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes pulseText {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.02);
+      opacity: 0.9;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .not-found-content {
+      padding: 2rem 1.5rem;
+      border-radius: 0.75rem;
+    }
+
+    .not-found-code {
+      font-size: clamp(3rem, 12vw, 6rem);
+    }
+
+    .not-found-code::before {
+      font-size: clamp(3rem, 12vw, 6rem);
+    }
+
+    .not-found-message {
+      font-size: clamp(1.2rem, 4vw, 2rem);
+    }
+
+    .not-found-description {
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .go-home-button {
+      padding: 0.7rem 1.5rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .not-found-content {
+      padding: 1.5rem 1rem;
+    }
+  }
+}
