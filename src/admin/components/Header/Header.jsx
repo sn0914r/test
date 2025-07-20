@@ -1,5 +1,5 @@
 import "./Header.css"
-import { NavLink } from "react-router-dom"
+import { NavLink, Link } from "react-router-dom"
 import { useState } from "react"
 
 export default function Header() {
@@ -10,7 +10,8 @@ export default function Header() {
     <header className="admin-header">
       <div className="header-container">
         <div className="header-left">
-          <div className="admin-heading">ADMIN PANEL</div>
+          
+          <Link className="admin-heading text-decoration-none" to="/admin-page">ADMIN PANEL</Link>
         </div>
 
         <div className="header-center">
