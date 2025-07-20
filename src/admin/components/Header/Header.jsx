@@ -1,5 +1,3 @@
-"use client"
-
 import "./Header.css"
 import { NavLink } from "react-router-dom"
 import { useState } from "react"
@@ -20,10 +18,10 @@ export default function Header() {
             <NavLink to="/admin-page/add-product" className="nav-link">
               Add Product
             </NavLink>
-            <NavLink to="/admin-page/add-History" className="nav-link">
+            <NavLink to="/admin-page/view-history" className="nav-link">
               View History
             </NavLink>
-            <NavLink to="/admin-page/Statistics" className="nav-link">
+            <NavLink to="/admin-page/statistics" className="nav-link">
               Statistics
             </NavLink>
           </nav>
