@@ -1,50 +1,57 @@
-"use client"
-
-import { useState } from "react" // Import React and useState
-import HistoryCard from "./HistoryCard"
-import "./History.css" // Import the new CSS file
+import { useEffect, useState } from "react";
+import HistoryCard from "./HistoryCard";
+import "./History.css";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../../firebase/config";
 
 export default function History() {
-  const fakeData = [
-    { id: 1, title: "Product Launch", date: "22-01-2023", img: "/cloud-server-upgrade.png" },
-    { id: 2, title: "Inventory Update", date: "23-01-2023", img: "/cloud-server-upgrade.png" },
-    { id: 3, title: "Customer Order #123", date: "24-01-2023", img: "/cloud-server-upgrade.png" },
-    { id: 4, title: "Marketing Campaign", date: "25-01-2023", img: "/cloud-server-upgrade.png" },
-    { id: 5, title: "System Maintenance", date: "26-01-2023", img: "/cloud-server-upgrade.png" },
-    { id: 6, title: "New User Registered", date: "27-01-2023", img: "/cloud-server-upgrade.png" },
-    { id: 7, title: "Product Price Adjustment", date: "28-01-2023", img: "/cloud-server-upgrade.png" },
-    { id: 8, title: "Security Patch Applied", date: "29-01-2023", img: "/cloud-server-upgrade.png" },
-    { id: 9, title: "Database Backup", date: "30-01-2023", img: "/cloud-server-upgrade.png" },
-    { id: 10, title: "New Feature Rollout", date: "31-01-2023", img: "/cloud-server-upgrade.png" },
-    { id: 11, title: "Server Upgrade", date: "01-02-2023", img: "/cloud-server-upgrade.png" },
-    { id: 12, title: "Content Moderation", date: "02-02-2023", img: "/cloud-server-upgrade.png" },
-  ]
+  const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6; // Display 6 items per page
 
-  const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 6 // Display 6 items per page
+  const fetchData = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      const products = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setData(products);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
 
-  // Calculate the items to display on the current page
-  const indexOfLastItem = currentPage * itemsPerPage
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage
-  const currentItems = fakeData.slice(indexOfFirstItem, indexOfLastItem)
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  // Calculate total pages
-  const totalPages = Math.ceil(fakeData.length / itemsPerPage)
+  // Pagination Logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(data.length / itemsPerPage);
 
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="history-page-container">
       <h2 className="history-title">View History</h2>
-      <p className="history-description">This is the history page where you can view past actions and events.</p>
+      <p className="history-description">This is the history page where you can view and edit previously added products.</p>
+
       <div className="history-cards-grid">
         {currentItems.map((item) => (
-          <HistoryCard key={item.id} title={item.title} date={item.date} imgSrc={item.img} id={item.id} />
+          <HistoryCard
+            key={item.id}
+            title={item.productName || "No Title"}
+            date={item.date || "N/A"}
+            imgSrc={(item.images && item.images[0]) || "https://via.placeholder.com/150"}
+            id={item.id}
+          />
         ))}
       </div>
 
-      {totalPages > 1 && ( // Only show pagination if there's more than one page
+      {totalPages > 1 && (
         <div className="pagination-container">
           <button
             onClick={() => paginate(currentPage - 1)}
@@ -79,5 +86,5 @@ export default function History() {
         </div>
       )}
     </div>
-  )
+  );
 }

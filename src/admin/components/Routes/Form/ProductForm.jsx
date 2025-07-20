@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap"; // Assuming you're using react-bootstrap for form elements
 import "./ProductForm.css";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../../../../firebase/config";
 
 export default function ProductForm() {
   const [formState, setFormState] = useState({
@@ -67,8 +69,48 @@ export default function ProductForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("form submitted");
-    alert("form Submitted");
+
+    const addProduct = async () => {
+      console.log("Product data:", formState);
+
+      try {
+        await addDoc(collection(db, "products"), {
+          productName: formState.productName,
+          shortDescription: formState.shortDescription,
+          fullDescription: formState.fullDescription,
+          images: formState.images,
+          price: parseFloat(formState.price),
+          discountPrice: parseFloat(formState.discountPrice),
+          affiliateLink: formState.affiliateLink,
+          brandName: formState.brandName,
+          category: formState.category,
+          tags: formState.tags.split(",").map((tag) => tag.trim()),
+          createdAt: serverTimestamp(),
+          editedAt: null,
+        });
+        console.log("Product Added");
+        alert("Form successfully Submitted");
+        setFormState({
+          productName: "",
+          shortDescription: "",
+          fullDescription: "",
+          images: [""],
+          price: "",
+          discountPrice: "",
+          affiliateLink: "",
+          brandName: "",
+          category: "",
+          tags: "",
+        });
+        setErrors({});
+      } catch (error) {
+        console.error("Error adding product:", error);
+        alert("Error adding product. Please try again.");
+        return;
+      }
+    };
+
+    addProduct();
   };
 
   const removeBtnSVG = (
@@ -165,6 +207,7 @@ const FormPresenter = ({
       <Form.Control
         as="textarea"
         rows={4}
+        name="fullDescription"
         value={formState.fullDescription}
         onChange={handleInputChange}
       />
@@ -249,7 +292,7 @@ const FormPresenter = ({
     <Form.Group className="mb-3" controlId="affiliateLink">
       <Form.Label>Affiliate Link</Form.Label>
       <Form.Control
-        type="url"
+        type="text"
         className={`form-input ${errors.affiliateLink && "input-error"}`}
         name="affiliateLink"
         value={formState.affiliateLink}
