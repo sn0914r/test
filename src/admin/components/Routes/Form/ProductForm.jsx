@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap"; // Assuming you're using react-bootstrap for form elements
 import "./ProductForm.css";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../firebase/config";
+import { useParams } from "react-router-dom";
+
 
 export default function ProductForm() {
   const [formState, setFormState] = useState({
@@ -17,6 +19,34 @@ export default function ProductForm() {
     category: "",
     tags: "",
   });
+
+  const { id } = useParams();
+
+  
+  useEffect(()=>{
+    if (id) {
+
+      const fetchProductData = async () => {
+        try {
+          const docRef = doc(db, "products", id);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            console.log("Document data:", docSnap.data().images);
+            const formData = {
+              ...docSnap.data(),
+              images: docSnap.data().images || [""], 
+            }
+            setFormState(formData);
+          } else {
+            console.error("No such document!");
+          }
+        } catch (error) {
+          console.error("Error fetching product data: ", error);
+        }
+      };
+      fetchProductData();
+    }
+  },[])
 
   const [errors, setErrors] = useState({});
 
@@ -94,7 +124,7 @@ export default function ProductForm() {
           productName: "",
           shortDescription: "",
           fullDescription: "",
-          images: [""],
+          images: ["hi", "hello"],
           price: "",
           discountPrice: "",
           affiliateLink: "",
@@ -110,7 +140,30 @@ export default function ProductForm() {
       }
     };
 
-    addProduct();
+    const editProduct = async () => {
+      console.log("Editing product with ID:", id);
+      try {
+        const docRef = doc(db, "products", id);
+        await updateDoc(docRef, {
+          ...formState,
+          editedAt: serverTimestamp(),
+        });
+        console.log("Product Edited");
+        alert("Form successfully Edited");
+      } catch (error) {
+        console.error("Error editing product:", error);
+        alert("Error editing product. Please try again.");
+      }
+    }
+    if (id) {
+      editProduct();
+    } else {
+      if (!formState.productName || !formState.price || !formState.images[0]) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+      addProduct();
+    }
   };
 
   const removeBtnSVG = (
@@ -223,6 +276,7 @@ const FormPresenter = ({
               errors[`imageUrl${index}`] && "input-error"
             }`}
             placeholder={`Image URL #${index + 1}`}
+            value={formState.images[index]}
             onChange={(e) => handleImageChange(index, e.target.value)}
             required={index === 0}
           />

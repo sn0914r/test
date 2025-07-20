@@ -17,6 +17,7 @@ export default function History() {
         ...doc.data()
       }));
       setData(products);
+      console.log("Fetched Data: ", products);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -44,7 +45,8 @@ export default function History() {
           <HistoryCard
             key={item.id}
             title={item.productName || "No Title"}
-            date={item.date || "N/A"}
+            date={item.createdAt}
+            editedDate={item.editedAt}
             imgSrc={(item.images && item.images[0]) || "https://via.placeholder.com/150"}
             id={item.id}
           />
