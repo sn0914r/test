@@ -2,8 +2,10 @@ import AdminPage from "./pages/AdminPage";
 // import AdminProductForm from "./admin/components/Routes/Form/ProductForm";
 import AdminProductForm from "./admin/components/Routes/Form/ProductForm";
 import AdminHistory from "./admin/components/Routes/History/History";
+import AdminStatsPage from "./admin/components/Routes/Stats/StatsPage";
+
 import NotFound from "./pages/NotFoundPage";
-import WorkingOnIt from "./pages/WorkingOnItPage";
+// import WorkingOnIt from "./pages/WorkingOnItPage";
 
 import { Route, Routes } from "react-router-dom"
 
@@ -15,7 +17,7 @@ function App() {
         <Route path="add-product" element={<AdminProductForm/>} />
         <Route path="add-product/:id" element={<AdminProductForm/>} />
         <Route path="view-history" element={<AdminHistory/>} />
-        <Route path="statistics" element={<WorkingOnIt/>} />
+        <Route path="statistics" element={<AdminStatsPage/>} />
       </Route>
       <Route path="/" element={<div>Home Page</div>} />
       <Route path="*" element={<NotFound/>} />
