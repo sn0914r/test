@@ -10,7 +10,7 @@ import {
   FaArrowUp,
   FaArrowDown,
   FaEllipsisH,
-} from "react-icons/fa" // Changed to FaEllipsisH
+} from "react-icons/fa"
 import {
   LineChart,
   Line,
@@ -26,8 +26,6 @@ import {
   BarChart,
   Bar,
 } from "recharts"
-// Removed shadcn/ui imports: Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
-// Removed lucide-react import: MoreHorizontal
 import "./StatsPage.css"
 
 // Mock Data - More comprehensive to support all features
@@ -191,12 +189,31 @@ const PIE_COLORS = ["#10b981", "#34d399", "#6ee7b7", "#a7f3d0", "#d1fae5", "#059
 export default function StatsPage() {
   const [clicksFilter, setClicksFilter] = useState("last7days") // 'today', 'last7days', 'last30days'
   const [topProductsFilter, setTopProductsFilter] = useState("overall") // 'overall', 'last7days', 'last30days'
+  const [isDesktop, setIsDesktop] = useState(false) // New state for desktop view
 
   const [isClicksDropdownOpen, setIsClicksDropdownOpen] = useState(false)
   const [isTopProductsDropdownOpen, setIsTopProductsDropdownOpen] = useState(false)
 
   const clicksDropdownRef = useRef(null)
   const topProductsDropdownRef = useRef(null)
+
+  // Effect to determine if it's a desktop view
+  useEffect(() => {
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768)
+    }
+
+    // Set initial value
+    checkIsDesktop()
+
+    // Add event listener for window resize
+    window.addEventListener("resize", checkIsDesktop)
+
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", checkIsDesktop)
+    }
+  }, [])
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -273,6 +290,17 @@ export default function StatsPage() {
     return [...dataToFilter].sort((a, b) => b.clicks - a.clicks).slice(0, 5) // Top 5 products
   }, [topProductsFilter])
 
+  // Calculate dynamic height for the bar chart based on number of products
+  const barChartHeight = useMemo(() => {
+    const baseHeightPerItem = 50 // Height for each bar + its spacing
+    const xAxisHeight = 100 // Fixed height for X-axis labels
+    const chartPadding = 50 // Additional padding for top/bottom margins, legend, etc.
+    const minHeight = 300 // Minimum height to ensure usability even with few items
+
+    const calculatedHeight = topClickedProducts.length * baseHeightPerItem + xAxisHeight + chartPadding
+    return Math.max(calculatedHeight, minHeight)
+  }, [topClickedProducts])
+
   const productsNeedingAttention = useMemo(() => {
     return mockProducts.filter(
       (p) => p.clicks === 0 || !p.imageUrl || !p.affiliateLink || (p.description && p.description.length < 20), // Example: very short description
@@ -304,8 +332,10 @@ export default function StatsPage() {
 
   return (
     <div className="stats-page-container">
-      <h2 className="stats-page-title">Dashboard Statistics</h2>
-      <p className="stats-page-description">A quick overview of your product performance and key metrics.</p>
+      <div className="stats-header">
+        <h2 className="stats-page-title">Dashboard Statistics</h2>
+        <p className="stats-page-description">A quick overview of your product performance and key metrics.</p>
+      </div>
 
       <div className="stats-cards-grid">
         <StatsCard
@@ -340,151 +370,163 @@ export default function StatsPage() {
         />
       </div>
 
-      <div className="charts-section">
-        <div className="chart-card">
-          <div className="chart-header-with-filter">
-            <h3 className="chart-title">Clicks Over Time</h3>
-            <div className="custom-dropdown-container" ref={clicksDropdownRef}>
-              <button
-                className="chart-filter-button"
-                onClick={() => setIsClicksDropdownOpen(!isClicksDropdownOpen)}
-                aria-label="Open clicks filter menu"
-              >
-                <FaEllipsisH className="h-4 w-4" />
-              </button>
-              {isClicksDropdownOpen && (
-                <div className="custom-dropdown-content">
-                  <button
-                    className="dropdown-item"
-                    onClick={() => {
-                      setClicksFilter("today")
-                      setIsClicksDropdownOpen(false)
-                    }}
-                  >
-                    Daily
-                  </button>
-                  <button
-                    className="dropdown-item"
-                    onClick={() => {
-                      setClicksFilter("last7days")
-                      setIsClicksDropdownOpen(false)
-                    }}
-                  >
-                    Weekly
-                  </button>
-                  <button
-                    className="dropdown-item"
-                    onClick={() => {
-                      setClicksFilter("last30days")
-                      setIsClicksDropdownOpen(false)
-                    }}
-                  >
-                    Monthly
-                  </button>
-                </div>
-              )}
+      {isDesktop ? (
+        <div className="charts-grid">
+          <div className="chart-card">
+            <div className="chart-header-with-filter">
+              <h3 className="chart-title">Clicks Over Time</h3>
+              <div className="custom-dropdown-container" ref={clicksDropdownRef}>
+                <button
+                  className="chart-filter-button"
+                  onClick={() => setIsClicksDropdownOpen(!isClicksDropdownOpen)}
+                  aria-label="Open clicks filter menu"
+                >
+                  <FaEllipsisH className="h-4 w-4" />
+                </button>
+                {isClicksDropdownOpen && (
+                  <div className="custom-dropdown-content">
+                    <button
+                      className="dropdown-item"
+                      onClick={() => {
+                        setClicksFilter("today")
+                        setIsClicksDropdownOpen(false)
+                      }}
+                    >
+                      Daily
+                    </button>
+                    <button
+                      className="dropdown-item"
+                      onClick={() => {
+                        setClicksFilter("last7days")
+                        setIsClicksDropdownOpen(false)
+                      }}
+                    >
+                      Weekly
+                    </button>
+                    <button
+                      className="dropdown-item"
+                      onClick={() => {
+                        setClicksFilter("last30days")
+                        setIsClicksDropdownOpen(false)
+                      }}
+                    >
+                      Monthly
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
+            <p className="chart-subtitle">Showing data for: {getFilterLabel(clicksFilter)}</p>
+            <ResponsiveContainer width="100%" height={400}>
+              <LineChart data={filteredClicksData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" /> {/* Lighter grid */}
+                <XAxis
+                  dataKey="date"
+                  tickFormatter={(dateStr) =>
+                    new Date(dateStr).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+                  }
+                />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="clicks" stroke="#10b981" activeDot={{ r: 8 }} />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
-          <p className="chart-subtitle">Showing data for: {getFilterLabel(clicksFilter)}</p>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={filteredClicksData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis
-                dataKey="date"
-                tickFormatter={(dateStr) =>
-                  new Date(dateStr).toLocaleDateString("en-US", { month: "short", day: "numeric" })
-                }
-              />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="clicks" stroke="#10b981" activeDot={{ r: 8 }} />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
 
-        <div className="chart-card">
-          <h3 className="chart-title">Products per Category</h3>
-          <p className="chart-subtitle">Distribution of products across categories</p>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={productsPerCategory}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                outerRadius={100}
-                fill="#8884d8"
-                dataKey="value"
-                label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-              >
-                {productsPerCategory.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+          <div className="chart-card">
+            <h3 className="chart-title">Products per Category</h3>
+            <p className="chart-subtitle">Distribution of products across categories</p>
+            <ResponsiveContainer width="100%" height={400}>
+              <PieChart>
+                <Pie
+                  data={productsPerCategory}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  outerRadius={100}
+                  fill="#8884d8"
+                  dataKey="value"
+                  label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+                >
+                  {productsPerCategory.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
 
-        <div className="chart-card">
-          <div className="chart-header-with-filter">
-            <h3 className="chart-title">Top Clicked Products</h3>
-            <div className="custom-dropdown-container" ref={topProductsDropdownRef}>
-              <button
-                className="chart-filter-button"
-                onClick={() => setIsTopProductsDropdownOpen(!isTopProductsDropdownOpen)}
-                aria-label="Open top products filter menu"
-              >
-                <FaEllipsisH className="h-4 w-4" />
-              </button>
-              {isTopProductsDropdownOpen && (
-                <div className="custom-dropdown-content">
-                  <button
-                    className="dropdown-item"
-                    onClick={() => {
-                      setTopProductsFilter("overall")
-                      setIsTopProductsDropdownOpen(false)
-                    }}
-                  >
-                    Overall
-                  </button>
-                  <button
-                    className="dropdown-item"
-                    onClick={() => {
-                      setTopProductsFilter("last7days")
-                      setIsTopProductsDropdownOpen(false)
-                    }}
-                  >
-                    Weekly
-                  </button>
-                  <button
-                    className="dropdown-item"
-                    onClick={() => {
-                      setTopProductsFilter("last30days")
-                      setIsTopProductsDropdownOpen(false)
-                    }}
-                  >
-                    Monthly
-                  </button>
-                </div>
-              )}
+          <div className="chart-card">
+            <div className="chart-header-with-filter">
+              <h3 className="chart-title">Top Clicked Products</h3>
+              <div className="custom-dropdown-container" ref={topProductsDropdownRef}>
+                <button
+                  className="chart-filter-button"
+                  onClick={() => setIsTopProductsDropdownOpen(!isTopProductsDropdownOpen)}
+                  aria-label="Open top products filter menu"
+                >
+                  <FaEllipsisH className="h-4 w-4" />
+                </button>
+                {isTopProductsDropdownOpen && (
+                  <div className="custom-dropdown-content">
+                    <button
+                      className="dropdown-item"
+                      onClick={() => {
+                        setTopProductsFilter("overall")
+                        setIsTopProductsDropdownOpen(false)
+                      }}
+                    >
+                      Overall
+                    </button>
+                    <button
+                      className="dropdown-item"
+                      onClick={() => {
+                        setTopProductsFilter("last7days")
+                        setIsTopProductsDropdownOpen(false)
+                      }}
+                    >
+                      Weekly
+                    </button>
+                    <button
+                      className="dropdown-item"
+                      onClick={() => {
+                        setTopProductsFilter("last30days")
+                        setIsTopProductsDropdownOpen(false)
+                      }}
+                    >
+                      Monthly
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
+            <p className="chart-subtitle">Showing data for: {getFilterLabel(topProductsFilter)}</p>
+            <ResponsiveContainer width="100%" height={barChartHeight}>
+              <BarChart data={topClickedProducts} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <defs>
+                  <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#34d399" stopOpacity={0.5} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" /> {/* Lighter grid */}
+                <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} interval={0} />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="clicks" fill="url(#barGradient)" radius={[4, 4, 0, 0]} animationDuration={700} />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
-          <p className="chart-subtitle">Showing data for: {getFilterLabel(topProductsFilter)}</p>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={topClickedProducts} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="name" angle={-30} textAnchor="end" height={60} />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="clicks" fill="#34d399" />
-            </BarChart>
-          </ResponsiveContainer>
         </div>
-      </div>
+      ) : (
+        <div className="charts-placeholder-message">
+          <p>Please use a desktop or larger screen to view the charts.</p>
+        </div>
+      )}
 
       <div className="attention-section">
         <h3 className="attention-title">
