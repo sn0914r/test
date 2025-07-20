@@ -1,6 +1,6 @@
 import Header from "../admin/components/Header/Header"
 import { Outlet, useLocation } from "react-router-dom"
-import AdminDashboardHome from "../admin/components/Routes/Home/adminDashboardHome"
+import AdminDashboardHome from "../admin/components/Routes/Home/AdminDashboardHome"
 import "./AdminPage.css" 
 
 export default function AdminPage() {
