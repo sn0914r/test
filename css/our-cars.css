@@ -117,8 +117,10 @@
 
   .card-footer {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    gap: 8px;
     padding-top: 16px;
     border-top: 1px solid #333333;
   }
