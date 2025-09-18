@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Showcase</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Updated background to white and adjusted all colors for white theme */
+        body {
+            background-color: #ffffff;
+            color: #333333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .search-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .search-bar {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .search-bar input {
+            background-color: #ffffff;
+            border: 2px solid #dee2e6;
+            color: #333333;
+            border-radius: 25px;
+            padding: 12px 20px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            border-color: #FFC40C;
+            box-shadow: 0 0 0 0.2rem rgba(255, 196, 12, 0.25);
+            background-color: #ffffff;
+        }
+
+        .search-bar input::placeholder {
+            color: #6c757d;
+        }
+
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 8px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #dee2e6;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #6c757d;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .tab-btn.active {
+            background-color: #FFC40C;
+            color: #000;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background-color: #e9ecef;
+            color: #333;
+        }
+
+        /* Completely redesigned vehicle cards with detailed pricing information */
+        .vehicle-card {
+            background: #ffffff;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            height: 100%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 196, 12, 0.3);
+            border-color: #FFC40C;
+        }
+
+        .vehicle-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .vehicle-info {
+            padding: 1.5rem;
+        }
+
+        .vehicle-title {
+            color: #333333;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            color: #FFC40C;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pricing-info {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #FFC40C;
+        }
+
+        .pricing-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .pricing-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .pricing-label {
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .pricing-value {
+            color: #333333;
+            font-weight: 600;
+        }
+
+        .highlight-price {
+            background-color: #FFC40C;
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .vehicle-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-tag {
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .book-btn {
+            background-color: #FFC40C;
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .book-btn:hover {
+            background-color: #e6b00a;
+            transform: translateY(-2px);
+        }
+
+        .no-results {
+            text-align: center;
+            color: #6c757d;
+            font-size: 1.2rem;
+            margin: 3rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .tab-container {
+                max-width: 100%;
+                margin: 0 1rem 2rem 1rem;
+            }
+            
+            .search-bar {
+                margin: 0 1rem;
+            }
+
+            .pricing-item {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Search Section -->
+    <div class="search-container">
+        <div class="container">
+            <div class="search-bar">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search vehicles...">
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="container">
+        <div class="tab-container">
+            <button class="tab-btn active" data-filter="all">All</button>
+            <button class="tab-btn" data-filter="cars">Cars</button>
+            <button class="tab-btn" data-filter="bikes">Bikes</button>
+        </div>
+
+        <!-- Vehicle Grid -->
+        <div class="row" id="vehicleGrid">
+            <!-- Updated all vehicle cards with detailed pricing information -->
+            <!-- Car 1 -->
+            <div class="col-lg-3 col-md-6 col-sm-12 vehicle-item" data-type="cars" data-name="luxury sedan mercedes">
+                <div class="vehicle-card">
+                    <img src="/placeholder.svg?height=200&width=300" alt="Luxury Sedan" class="vehicle-image">
+                    <div class="vehicle-info">
+                        <h3 class="vehicle-title">Luxury Sedan</h3>
+                        <p class="product-description">Product Description</p>
+                        <div class="pricing-info">
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per day</span>
+                                <span class="pricing-value highlight-price">500/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">24hrs valid minimum 5hrs</span>
+                                <span class="pricing-value">300/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per hour</span>
+                                <span class="pricing-value">60/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">150kms limit (no fuel)</span>
+                                <span class="pricing-value">Included</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Extra km</span>
+                                <span class="pricing-value">3/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">1 to 5kms below delivery charges</span>
+                                <span class="pricing-value">100/-</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-features">
+                            <span class="feature-tag">AC</span>
+                            <span class="feature-tag">GPS</span>
+                            <span class="feature-tag">Leather</span>
+                        </div>
+                        <button class="book-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Car 2 -->
+            <div class="col-lg-3 col-md-6 col-sm-12 vehicle-item" data-type="cars" data-name="premium suv bmw">
+                <div class="vehicle-card">
+                    <img src="/placeholder.svg?height=200&width=300" alt="Premium SUV" class="vehicle-image">
+                    <div class="vehicle-info">
+                        <h3 class="vehicle-title">Premium SUV</h3>
+                        <p class="product-description">Product Description</p>
+                        <div class="pricing-info">
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per day</span>
+                                <span class="pricing-value highlight-price">500/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">24hrs valid minimum 5hrs</span>
+                                <span class="pricing-value">300/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per hour</span>
+                                <span class="pricing-value">60/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">150kms limit (no fuel)</span>
+                                <span class="pricing-value">Included</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Extra km</span>
+                                <span class="pricing-value">3/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">1 to 5kms below delivery charges</span>
+                                <span class="pricing-value">100/-</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-features">
+                            <span class="feature-tag">4WD</span>
+                            <span class="feature-tag">7 Seats</span>
+                            <span class="feature-tag">Sunroof</span>
+                        </div>
+                        <button class="book-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Car 3 -->
+            <div class="col-lg-3 col-md-6 col-sm-12 vehicle-item" data-type="cars" data-name="compact car honda civic">
+                <div class="vehicle-card">
+                    <img src="/placeholder.svg?height=200&width=300" alt="Compact Car" class="vehicle-image">
+                    <div class="vehicle-info">
+                        <h3 class="vehicle-title">Compact Car</h3>
+                        <p class="product-description">Product Description</p>
+                        <div class="pricing-info">
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per day</span>
+                                <span class="pricing-value highlight-price">500/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">24hrs valid minimum 5hrs</span>
+                                <span class="pricing-value">300/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per hour</span>
+                                <span class="pricing-value">60/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">150kms limit (no fuel)</span>
+                                <span class="pricing-value">Included</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Extra km</span>
+                                <span class="pricing-value">3/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">1 to 5kms below delivery charges</span>
+                                <span class="pricing-value">100/-</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-features">
+                            <span class="feature-tag">Eco</span>
+                            <span class="feature-tag">Bluetooth</span>
+                            <span class="feature-tag">USB</span>
+                        </div>
+                        <button class="book-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Car 4 -->
+            <div class="col-lg-3 col-md-6 col-sm-12 vehicle-item" data-type="cars" data-name="sports car ferrari">
+                <div class="vehicle-card">
+                    <img src="/placeholder.svg?height=200&width=300" alt="Sports Car" class="vehicle-image">
+                    <div class="vehicle-info">
+                        <h3 class="vehicle-title">Sports Car</h3>
+                        <p class="product-description">Product Description</p>
+                        <div class="pricing-info">
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per day</span>
+                                <span class="pricing-value highlight-price">500/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">24hrs valid minimum 5hrs</span>
+                                <span class="pricing-value">300/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per hour</span>
+                                <span class="pricing-value">60/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">150kms limit (no fuel)</span>
+                                <span class="pricing-value">Included</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Extra km</span>
+                                <span class="pricing-value">3/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">1 to 5kms below delivery charges</span>
+                                <span class="pricing-value">100/-</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-features">
+                            <span class="feature-tag">V8</span>
+                            <span class="feature-tag">Sport</span>
+                            <span class="feature-tag">Manual</span>
+                        </div>
+                        <button class="book-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bike 1 -->
+            <div class="col-lg-3 col-md-6 col-sm-12 vehicle-item" data-type="bikes" data-name="sports bike yamaha">
+                <div class="vehicle-card">
+                    <img src="/placeholder.svg?height=200&width=300" alt="Sports Bike" class="vehicle-image">
+                    <div class="vehicle-info">
+                        <h3 class="vehicle-title">Sports Bike</h3>
+                        <p class="product-description">Product Description</p>
+                        <div class="pricing-info">
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per day</span>
+                                <span class="pricing-value highlight-price">500/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">24hrs valid minimum 5hrs</span>
+                                <span class="pricing-value">300/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per hour</span>
+                                <span class="pricing-value">60/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">150kms limit (no fuel)</span>
+                                <span class="pricing-value">Included</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Extra km</span>
+                                <span class="pricing-value">3/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">1 to 5kms below delivery charges</span>
+                                <span class="pricing-value">100/-</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-features">
+                            <span class="feature-tag">600cc</span>
+                            <span class="feature-tag">ABS</span>
+                            <span class="feature-tag">Digital</span>
+                        </div>
+                        <button class="book-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bike 2 -->
+            <div class="col-lg-3 col-md-6 col-sm-12 vehicle-item" data-type="bikes" data-name="electric scooter">
+                <div class="vehicle-card">
+                    <img src="/placeholder.svg?height=200&width=300" alt="Electric Scooter" class="vehicle-image">
+                    <div class="vehicle-info">
+                        <h3 class="vehicle-title">Electric Scooter</h3>
+                        <p class="product-description">Product Description</p>
+                        <div class="pricing-info">
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per day</span>
+                                <span class="pricing-value highlight-price">500/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">24hrs valid minimum 5hrs</span>
+                                <span class="pricing-value">300/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per hour</span>
+                                <span class="pricing-value">60/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">150kms limit (no fuel)</span>
+                                <span class="pricing-value">Included</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Extra km</span>
+                                <span class="pricing-value">3/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">1 to 5kms below delivery charges</span>
+                                <span class="pricing-value">100/-</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-features">
+                            <span class="feature-tag">Electric</span>
+                            <span class="feature-tag">Eco</span>
+                            <span class="feature-tag">Light</span>
+                        </div>
+                        <button class="book-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bike 3 -->
+            <div class="col-lg-3 col-md-6 col-sm-12 vehicle-item" data-type="bikes" data-name="cruiser bike harley">
+                <div class="vehicle-card">
+                    <img src="/placeholder.svg?height=200&width=300" alt="Cruiser Bike" class="vehicle-image">
+                    <div class="vehicle-info">
+                        <h3 class="vehicle-title">Cruiser Bike</h3>
+                        <p class="product-description">Product Description</p>
+                        <div class="pricing-info">
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per day</span>
+                                <span class="pricing-value highlight-price">500/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">24hrs valid minimum 5hrs</span>
+                                <span class="pricing-value">300/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per hour</span>
+                                <span class="pricing-value">60/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">150kms limit (no fuel)</span>
+                                <span class="pricing-value">Included</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Extra km</span>
+                                <span class="pricing-value">3/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">1 to 5kms below delivery charges</span>
+                                <span class="pricing-value">100/-</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-features">
+                            <span class="feature-tag">V-Twin</span>
+                            <span class="feature-tag">Comfort</span>
+                            <span class="feature-tag">Classic</span>
+                        </div>
+                        <button class="book-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bike 4 -->
+            <div class="col-lg-3 col-md-6 col-sm-12 vehicle-item" data-type="bikes" data-name="adventure bike bmw">
+                <div class="vehicle-card">
+                    <img src="/placeholder.svg?height=200&width=300" alt="Adventure Bike" class="vehicle-image">
+                    <div class="vehicle-info">
+                        <h3 class="vehicle-title">Adventure Bike</h3>
+                        <p class="product-description">Product Description</p>
+                        <div class="pricing-info">
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per day</span>
+                                <span class="pricing-value highlight-price">500/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">24hrs valid minimum 5hrs</span>
+                                <span class="pricing-value">300/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Per hour</span>
+                                <span class="pricing-value">60/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">150kms limit (no fuel)</span>
+                                <span class="pricing-value">Included</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">Extra km</span>
+                                <span class="pricing-value">3/-</span>
+                            </div>
+                            <div class="pricing-item">
+                                <span class="pricing-label">1 to 5kms below delivery charges</span>
+                                <span class="pricing-value">100/-</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-features">
+                            <span class="feature-tag">1200cc</span>
+                            <span class="feature-tag">ABS</span>
+                            <span class="feature-tag">Touring</span>
+                        </div>
+                        <button class="book-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="no-results" style="display: none;">
+            <i class="fas fa-search fa-3x mb-3"></i>
+            <p>No vehicles found matching your search.</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Tab functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const vehicleItems = document.querySelectorAll('.vehicle-item');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('noResults');
+
+        // Tab switching
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all tabs
+                tabBtns.forEach(tab => tab.classList.remove('active'));
+                // Add active class to clicked tab
+                btn.classList.add('active');
+                
+                const filter = btn.getAttribute('data-filter');
+                filterVehicles(filter, searchInput.value);
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-filter');
+            filterVehicles(activeTab, e.target.value);
+        });
+
+        // Filter vehicles function
+        function filterVehicles(type, searchTerm) {
+            let visibleCount = 0;
+            
+            vehicleItems.forEach(item => {
+                const itemType = item.getAttribute('data-type');
+                const itemName = item.getAttribute('data-name').toLowerCase();
+                const matchesType = type === 'all' || itemType === type;
+                const matchesSearch = searchTerm === '' || itemName.includes(searchTerm.toLowerCase());
+                
+                if (matchesType && matchesSearch) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Show/hide no results message
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+
+        // Book now functionality
+        document.querySelectorAll('.book-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const vehicleTitle = e.target.closest('.vehicle-card').querySelector('.vehicle-title').textContent;
+                alert(`Booking ${vehicleTitle}... (This would redirect to booking page)`);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+.search-container {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.search-container .search-bar {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.search-container .search-bar input {
+  background-color: #ffffff;
+  border: 2px solid #dee2e6;
+  color: #333333;
+  border-radius: 16px;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+
+  &:focus {
+    border-color: #ffc40c;
+    box-shadow: 0 0 0 0.2rem rgba(255, 196, 12, 0.25);
+    background-color: #ffffff;
+  }
+  &::placeholder {
+    color: #6c757d;
+  }
+}

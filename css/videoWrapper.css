@@ -91,6 +91,24 @@ header .nav-link {
     margin-bottom: 1.5rem;
     opacity: 0.85;
   }
+
+  .cta-btn {
+    background-color: transparent;
+    color: #ffc40c;
+    border: 2px solid #ffc40c;
+    padding: 6px 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    font-weight: 600px;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    margin-left: 20px;
+
+    &:hover {
+      background-color: #ffc40c;
+      color: #000000;
+    }
+  }
 }
 
 /* responsive height for hero section*/
