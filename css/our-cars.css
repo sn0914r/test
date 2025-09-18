@@ -15,7 +15,7 @@
   &::after {
     content: "";
     display: block;
-    width: 85px;
+    width:185px;
     height: 3px;
     background: gold;
     margin: 10px auto 0;
