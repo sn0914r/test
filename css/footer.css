@@ -1,0 +1,39 @@
+footer {
+  border-top: 1px solid rgba(255, 196, 12, 0.4);
+  color: #ffffff;
+  background-color: #000000;
+  padding-top: 3rem;
+}
+
+footer {
+  h5 {
+    color: #ffc40c;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  a {
+    transition: color 0.3s ease, transform 0.2s ease;
+  }
+
+  .quick-links a:hover {
+    color: #ffc40c !important;
+    transform: translateX(3px);
+  }
+
+  .contact-us p {
+    margin-bottom: 0.5rem;
+  }
+
+  .btn.btn-outline-warning {
+    border-radius: 50%;
+    border: 2px solid #ffc40c;
+    padding: 0.5rem 0.7rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: #ffc40c;
+      color: #000 !important;
+    }
+  }
+}

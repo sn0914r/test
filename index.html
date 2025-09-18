@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crazy Cars and Bikes</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    />
+
+    <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="./css/videoWrapper.css" />
+    <link rel="stylesheet" href="./css/offcanvas.css" />
+    <link rel="stylesheet" href="./css/how-it-works.css" />
+    <link rel="stylesheet" href="./css/our-cars.css" />
+    <link rel="stylesheet" href="./css/our-services.css" />
+    <link rel="stylesheet" href="./css/contact-us.css" />
+    <link rel="stylesheet" href="./css/footer.css" />
+  </head>
+  <body>
+    <div class="video-wrapper">
+      <video autoplay muted loop class="bg-video">
+        <source src="assets/heroSectionBGVideo.mp4" type="video/mp4" />
+      </video>
+
+      <header class="container-fluid">
+        <nav
+          class="container d-flex align-items-center justify-content-between"
+        >
+          <!-- Logo -->
+          <div
+            class="logo ratio ratio-1x1 overflow-hidden rounded-circle"
+            style="width: 48px"
+          >
+            <img
+              class="rounded-circle w-100 h-100"
+              src="./assets/logo.webp"
+              alt="jaggu bikes"
+            />
+          </div>
+
+          <!-- desktop menu -->
+          <ul class="nav d-none d-md-flex">
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="#hero">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="#how-it-works">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="#our-services">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="#contact-us">Contact</a>
+            </li>
+          </ul>
+
+          <!-- cta btn for desktop -->
+          <a href="#" class="cta-btn btn d-none d-md-block">Book Now</a>
+
+          <!-- mobile toggle btn -->
+          <button
+            class="btn d-lg-none sidebar-btn"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#mobileMenu"
+            aria-controls="mobileMenu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+        </nav>
+      </header>
+
+      <section id="hero-section" class="container-fluid">
+        <div class="hero-content container">
+          <h1>Heading</h1>
+          <p>Hello world bhaai</p>
+          <div class="mouse-scroll"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- offcanvas parent for sm menu -->
+    <div class="off-canvas-menu-for-sm-devices"></div>
+
+    <main>
+      <!-- How it works section -->
+      <section id="how-it-works">
+        <div class="container text-center">
+          <h2 class="mb-5">How It Works</h2>
+          <p class="desc">
+            Quick and easy steps to get your car ready for your journey. Follow
+            these simple steps and enjoy a seamless experience
+          </p>
+          <div class="boxes position-relative row justify-content-around">
+            <article class="box box-1 col-md-4 col-lg-3">
+              <div class="box-icon">
+                <i class="bi bi-geo-alt"></i>
+              </div>
+              <h4>Choose Location</h4>
+              <p class="text-muted">
+                Select your pickup and drop-off locations from our extensive
+                network of service areas.
+              </p>
+            </article>
+
+            <article class="box box-2 col-md-4 col-lg-3">
+              <div class="box-icon">
+                <i class="bi bi-calendar-date"></i>
+              </div>
+              <h4>Pick-Up Date</h4>
+              <p class="text-muted">
+                Choose your preferred date and time for pickup that fits your
+                schedule perfectly.
+              </p>
+            </article>
+
+            <article class="box box-3 col-md-4 col-lg-3">
+              <div class="box-icon">
+                <i class="bi bi-car-front"></i>
+              </div>
+              <h4>Book Your Car</h4>
+              <p class="text-muted">
+                Complete your booking with our secure payment system and get
+                instant confirmation.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- our cars section -->
+      <section id="our-cars" class="container-fluid">
+        <div class="container">
+          <h2 class="text-center mb-5">Our Cars and <i class="fa fa-bitbucket-square" aria-hidden="true"></i></h2>
+          <p class="text-center mb-5">
+            Explore our collection of cars and bikes designed for style,
+            comfort, and performance.
+          </p>
+
+          <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="vehicle-card">
+                <div class="card-image">
+                  <img
+                    src="./assets/our-cars/car1.jpg"
+                    alt="Luxury Sedan"
+                  />
+                  <div class="card-badge">Popular</div>
+                </div>
+                <div class="card-content">
+                  <h3 class="vehicle-name">Luxury Sedan</h3>
+                  <div class="vehicle-type">Premium Car</div>
+                  <p class="vehicle-description">
+                    Experience comfort and elegance with our premium sedan
+                    fleet.
+                  </p>
+                  <div class="vehicle-features">
+                    <span class="feature-tag">AC</span>
+                    <span class="feature-tag">4 Seats</span>
+                    <span class="feature-tag">GPS</span>
+                  </div>
+                  <div class="card-footer">
+                    <div class="price">
+                      $25<span class="price-period">/hour</span>
+                    </div>
+                    <a href="#" class="book-btn">
+                      Book Now <i class="bi bi-arrow-right"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+              <div class="vehicle-card">
+                <div class="card-image">
+                  <img
+                    src="/placeholder.svg?height=220&width=300"
+                    alt="Luxury Sedan"
+                  />
+                  <div class="card-badge">Popular</div>
+                </div>
+                <div class="card-content">
+                  <h3 class="vehicle-name">Luxury Sedan</h3>
+                  <div class="vehicle-type">Premium Car</div>
+                  <p class="vehicle-description">
+                    Experience comfort and elegance with our premium sedan
+                    fleet.
+                  </p>
+                  <div class="vehicle-features">
+                    <span class="feature-tag">AC</span>
+                    <span class="feature-tag">4 Seats</span>
+                    <span class="feature-tag">GPS</span>
+                  </div>
+                  <div class="card-footer">
+                    <div class="price">
+                      $25<span class="price-period">/hour</span>
+                    </div>
+                    <a href="#" class="book-btn">
+                      Book Now <i class="bi bi-arrow-right"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+              <div class="vehicle-card">
+                <div class="card-image">
+                  <img
+                    src="/placeholder.svg?height=220&width=300"
+                    alt="Luxury Sedan"
+                  />
+                  <div class="card-badge">Popular</div>
+                </div>
+                <div class="card-content">
+                  <h3 class="vehicle-name">Luxury Sedan</h3>
+                  <div class="vehicle-type">Premium Car</div>
+                  <p class="vehicle-description">
+                    Experience comfort and elegance with our premium sedan
+                    fleet.
+                  </p>
+                  <div class="vehicle-features">
+                    <span class="feature-tag">AC</span>
+                    <span class="feature-tag">4 Seats</span>
+                    <span class="feature-tag">GPS</span>
+                  </div>
+                  <div class="card-footer">
+                    <div class="price">
+                      $25<span class="price-period">/hour</span>
+                    </div>
+                    <a href="#" class="book-btn">
+                      Book Now <i class="bi bi-arrow-right"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+              <div class="vehicle-card">
+                <div class="card-image">
+                  <img
+                    src="/placeholder.svg?height=220&width=300"
+                    alt="Luxury Sedan"
+                  />
+                  <div class="card-badge">Popular</div>
+                </div>
+                <div class="card-content">
+                  <h3 class="vehicle-name">Luxury Sedan</h3>
+                  <div class="vehicle-type">Premium Car</div>
+                  <p class="vehicle-description">
+                    Experience comfort and elegance with our premium sedan
+                    fleet.
+                  </p>
+                  <div class="vehicle-features">
+                    <span class="feature-tag">AC</span>
+                    <span class="feature-tag">4 Seats</span>
+                    <span class="feature-tag">GPS</span>
+                  </div>
+                  <div class="card-footer">
+                    <div class="price">
+                      $25<span class="price-period">/hour</span>
+                    </div>
+                    <a href="#" class="book-btn">
+                      Book Now <i class="bi bi-arrow-right"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cta-section">
+            <a href="#" class="view-all-btn btn-sm">
+              <i class="bi bi-grid-3x3-gap"></i>
+              View All Vehicles
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- services section -->
+      <section class="container-fluid" id="our-services">
+        <div class="container">
+          <h2 class="text-center">Our Services</h2>
+          <p class="desc">
+            Quick and easy steps to get your car ready for your journey. Follow
+            these simple steps and enjoy a seamless experience
+          </p>
+
+          <div class="row g-4">
+            <div class="col-md-3 text-center">
+              <h3><i class="bi bi-car-front-fill"></i></h3>
+              <h5>Wide Range of Cars</h5>
+              <p>
+                From hatchbacks to luxury SUVs, choose the perfect ride for any
+                trip.
+              </p>
+            </div>
+            <div class="col-md-3 text-center">
+              <h3><i class="bi bi-currency-rupee"></i></h3>
+              <h5>Affordable Pricing</h5>
+              <p>
+                Transparent rates with no hidden charges, pay only for what you
+                need.
+              </p>
+            </div>
+            <div class="col-md-3 text-center">
+              <h3><i class="bi bi-phone-fill"></i></h3>
+              <h5>Easy Booking</h5>
+              <p>Quick online booking with instant confirmation.</p>
+            </div>
+            <div class="col-md-3 text-center">
+              <h3><i class="bi bi-tools"></i></h3>
+              <h5>24/7 Assistance</h5>
+              <p>Roadside support anytime, anywhere during your journey.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- contact us section -->
+      <section class="container-fluid bg-white py-2" id="contact-us">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8">
+              <h2 class="fw-bold">Call Us Today For Booking Your Next Ride</h2>
+              <p class="mb-4">
+                Discover hassle-free car rentals with premium comfort and
+                performance. Contact us now and reserve your car in just a few
+                clicks.
+              </p>
+              <a href="#" class="btn btn-lg rounded-3 contact-us-btn">
+                Book Now
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container-fluid">
+      <div class="container">
+        <div class="row text-center text-md-start">
+          <!-- titel and text info -->
+          <div class="col-md-3 mb-4">
+            <h5 class="fw-bold">Crazy Cars</h5>
+            <p>
+              Premium car rental service offering comfort, style, and
+              affordability.
+            </p>
+          </div>
+
+          <!-- quick links -->
+          <div class="col-md-3 mb-4">
+            <h5>Quick Links</h5>
+            <ul class="list-unstyled quick-links">
+              <li>
+                <a href="#" class="text-light text-decoration-none">Home</a>
+              </li>
+              <li>
+                <a href="#" class="text-light text-decoration-none">Our Cars</a>
+              </li>
+              <li>
+                <a href="#" class="text-light text-decoration-none">About</a>
+              </li>
+              <li>
+                <a href="#" class="text-light text-decoration-none">Contact</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- contact info -->
+          <div class="col-md-3 mb-4 contact-us">
+            <h5>Contact</h5>
+            <p id="footer-address">
+              <i class="bi bi-geo-alt"></i>
+            </p>
+            <p id="footer-telephone"><i class="bi bi-telephone"></i></p>
+            <p id="footer-gmail"><i class="bi bi-envelope"></i></p>
+          </div>
+
+          <!-- social media -->
+          <div class="col-md-3 mb-4">
+            <h5>Follow Us</h5>
+            <div
+              class="d-flex justify-content-center justify-content-md-start gap-2"
+              id="social-media-container"
+            >
+              <!-- Link structure: <a href="#" class="btn btn-outline-warning"
+                ><i class="bi bi-twitter-x"></i
+              ></a> -->
+            </div>
+          </div>
+
+          <!-- copyright mark -->
+          <div
+            class="text-center pt-3 border-top mt-3"
+            style="font-size: 0.9rem; color: #aaa"
+            id="footer-copy-right"
+          >
+            © 2025 Crazy Cars and Bikes. All Rights Reserved.
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./script/data.js"></script>
+    <script src="./script/offcanvasMenu.js" defer></script>
+    <script src="./script/dom.js"></script>
+  </body>
+</html>

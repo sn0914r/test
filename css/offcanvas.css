@@ -1,0 +1,68 @@
+#mobileMenu {
+  background: linear-gradient(
+      180deg,
+      rgba(27, 27, 27, 0.9),
+      rgba(14, 14, 14, 0.9)
+    ),
+    url(../assets/sidebarImg.webp) !important;
+  background-size: cover !important;
+  background-position: left center !important;
+}
+
+#mobileMenu .nav-link {
+  position: relative;
+  padding: 12px 20px;
+  display: block;
+  color: #ffffff;
+  transition: color 0.3s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background-color: transparent;
+    border-radius: 2px;
+  }
+
+  &:active,
+  &:hover {
+    color: #ffc40c;
+  }
+
+  &:active::before,
+  &:hover::before {
+    background-color: #ffc40c;
+  }
+}
+
+#mobileMenu .btn-close {
+  background-image: none;
+  margin-right: 1rem;
+}
+
+#mobileMenu .cta-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffc40c;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 196, 12, 0.4);
+  transition: background-color 0.3s ease;
+
+  a {
+    color: #000000;
+    font-weight: 600;
+    border: none;
+  }
+
+  &:active,
+  &:hover {
+    background-color: #e0b009;
+    box-shadow: 0 0 15px rgba(255, 196, 12, 0.7);
+  }
+}
